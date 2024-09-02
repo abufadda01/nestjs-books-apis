@@ -2,7 +2,8 @@ import { CreateBookDto } from '../dtos/CreateBook.dto';
 import { UpdateBookDto } from '../dtos/UpdateBook.dto';
 import { Book } from '../schemas/book.schema';
 import { BooksService } from './../services/books.service';
-import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import {Query as ExpressQuery} from "express-serve-static-core"
 
 
 @Controller('books')
@@ -13,8 +14,8 @@ export class BooksController {
 
 
     @Get()
-    async getAllBooks () : Promise <Book[]> {
-        return this.booksService.findAllBooks()
+    async getAllBooks (@Query() query : ExpressQuery) : Promise <Book[]> { // ExpressQuery will be the data type of the req query object , more type validation
+        return this.booksService.findAllBooks(query)
     }
 
 
@@ -39,7 +40,7 @@ export class BooksController {
 
     @Delete("/:id")
     async deleteBook(@Param("id") id : string){
-        return this.booksService.deleteBook(id)
+        return this.booksService.deleteBook(id) 
     }
 
 }
