@@ -1,23 +1,23 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsString } from "class-validator"
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator"
 import { Category } from "../schemas/book.schema"
 
 
 export class UpdateBookDto {
 
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     readonly title : string
     
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     readonly description : string
     
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     readonly author : string
     
     @IsNumber()
-    @IsNotEmpty()
+    @IsOptional()
     readonly price : number
 
     @IsEnum(Category)

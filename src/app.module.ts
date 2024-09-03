@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { BooksModule } from './books/books.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -14,7 +15,8 @@ import { MongooseModule } from '@nestjs/mongoose';
     }),
     // connect to our db
     MongooseModule.forRoot(process.env.MONGO_DB_URL),
-    BooksModule
+    BooksModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],

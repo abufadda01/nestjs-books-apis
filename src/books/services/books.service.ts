@@ -1,5 +1,5 @@
 import { UpdateBookDto } from './../dtos/UpdateBook.dto';
-import { HttpException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Book } from '../schemas/book.schema';
 import mongoose, { Model } from 'mongoose';
@@ -41,6 +41,12 @@ export class BooksService {
 
     async findBookById(id : string) : Promise <Book>{
         
+        const isValidId = mongoose.Types.ObjectId.isValid(id)
+
+        if(!isValidId){
+            throw new BadRequestException(`please enter correct id`)
+        } 
+
         const foundBook = await this.bookModel.findById(id)
         
         if(!foundBook){

@@ -20,7 +20,7 @@ export class CreateBookDto {
     @IsNotEmpty()
     readonly price : number
 
-    @IsEnum(Category)
+    @IsEnum(Category , {message : "please enter a valid category"})
     @IsNotEmpty()
     readonly category : Category
 

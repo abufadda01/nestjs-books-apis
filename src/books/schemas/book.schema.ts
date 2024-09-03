@@ -26,7 +26,7 @@ export class Book {
     @Prop()
     price : string
 
-    @Prop()
+    @Prop({enum : Category})
     category : Category
 
 }
