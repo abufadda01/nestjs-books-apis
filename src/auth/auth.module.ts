@@ -6,6 +6,7 @@ import { User, UserSchema } from './schemas/user.schema';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { JwtStrategy } from './jwt.strategy';
 
 
 @Module({
@@ -23,7 +24,8 @@ import { ConfigService } from '@nestjs/config';
     MongooseModule.forFeature([{name : User.name , schema : UserSchema}]) ,
   ],
   controllers: [AuthController],
-  providers: [AuthService]
+  providers: [AuthService , JwtStrategy] ,
+  exports : [JwtStrategy , PassportModule] // exports is array that have modules that i want to use it in other modules when i import this module in other places
 })
 
 

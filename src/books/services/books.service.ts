@@ -4,7 +4,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Book } from '../schemas/book.schema';
 import mongoose, { Model } from 'mongoose';
 import { CreateBookDto } from '../dtos/CreateBook.dto';
-import {Query as ExpressQuery} from "express-serve-static-core"
+import {Query as ExpressQuery , Request} from "express-serve-static-core"
+import { User } from 'src/auth/schemas/user.schema';
 
 
 
@@ -31,8 +32,8 @@ export class BooksService {
 
 
 
-    async createBook(createBookDto : CreateBookDto) : Promise <Book> {
-        const newBook = new this.bookModel(createBookDto)
+    async createBook(createBookDto : CreateBookDto , user : User) : Promise <Book> {
+        const newBook = new this.bookModel({...createBookDto , user : user._id })
         await newBook.save()
         return newBook
     }

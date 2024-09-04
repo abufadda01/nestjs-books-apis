@@ -1,9 +1,12 @@
+import { AuthGuard } from '@nestjs/passport';
 import { CreateBookDto } from '../dtos/CreateBook.dto';
 import { UpdateBookDto } from '../dtos/UpdateBook.dto';
 import { Book } from '../schemas/book.schema';
 import { BooksService } from './../services/books.service';
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
-import {Query as ExpressQuery} from "express-serve-static-core"
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import {Query as ExpressQuery , Request} from "express-serve-static-core"
+import { User } from 'src/auth/schemas/user.schema';
+
 
 
 @Controller('books')
@@ -20,9 +23,10 @@ export class BooksController {
 
 
     @Post()
+    @UseGuards(AuthGuard()) // now this route will be protected so only logged users that pass the auth bearer token will access this route
     @UsePipes(new ValidationPipe())
-    async createBook(@Body() createBookDto : CreateBookDto) : Promise <Book> {
-        return this.booksService.createBook(createBookDto)
+    async createBook(@Body() createBookDto : CreateBookDto , @Req() req) : Promise <Book> {
+        return this.booksService.createBook(createBookDto , req.user) // WE COULD SEND THE req.user key here because the  @UseGuards(AuthGuard()) validate our user so we ensure that we have user key in our request
     }
 
 
