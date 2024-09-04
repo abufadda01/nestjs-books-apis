@@ -17,14 +17,16 @@ import { JwtStrategy } from './jwt.strategy';
       useFactory : (config : ConfigService) => { // A factory function that returns the configuration object for the JWT module
         return {
           secret : config.get<string>("JWT_SECRET") ,
-          signOptions : {expiresIn : config.get<string | number>("JWT_EXPIRE")}
+          signOptions : {
+            expiresIn : config.get<string | number>("JWT_EXPIRE")
+          }
         }
       }
     }) ,
     MongooseModule.forFeature([{name : User.name , schema : UserSchema}]) ,
   ],
   controllers: [AuthController],
-  providers: [AuthService , JwtStrategy] ,
+  providers: [AuthService , JwtStrategy] , // i add JwtStrategy in the providers to could use in any related field and inject it
   exports : [JwtStrategy , PassportModule] // exports is array that have modules that i want to use it in other modules when i import this module in other places
 })
 

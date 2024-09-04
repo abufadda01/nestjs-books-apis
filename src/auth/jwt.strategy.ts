@@ -20,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
     }
 
 
-    async validate(payload : JwtPayload) { // this function will retrun user key in the req object if the user is valid user and looged in and send the authorization header with bearer token
+    async validate(payload : JwtPayload) { // this function will retrun user key in the req object if the user is valid user and logged in and send the authorization header with bearer token
 
         const {id} = payload
 
