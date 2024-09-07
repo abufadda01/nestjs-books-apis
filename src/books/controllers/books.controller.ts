@@ -7,6 +7,9 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query, Req, UseGuard
 import {Query as ExpressQuery , Request} from "express-serve-static-core"
 import { User } from 'src/auth/schemas/user.schema';
 import { RequestInterface } from 'src/interfaces/Request.interface';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/auth/enums/role.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 
 
@@ -18,6 +21,8 @@ export class BooksController {
 
 
     @Get()
+    @Roles(Role.Moderator , Role.Admin) // @Roles decorator attach the required roles to the route , THIS ROUTE REQUIRED : Moderator , Admin as required roles to access it
+    @UseGuards(AuthGuard() , RolesGuard) // First, authentication is checked, then authorization
     async getAllBooks (@Query() query : ExpressQuery) : Promise <Book[]> { // ExpressQuery will be the data type of the req query object , more type validation
         return this.booksService.findAllBooks(query)
     }

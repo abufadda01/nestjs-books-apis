@@ -19,7 +19,7 @@ export class AuthService {
 
     async register(registerDto: RegisterDto): Promise<{ token: string; newUser: User }> {
 
-        const { name, email, password } = registerDto;
+        const { name, email, password , role } = registerDto;
 
         const isUserExist = await this.userModel.findOne({email}).select("+password")
 
@@ -32,7 +32,8 @@ export class AuthService {
         const newUser = new this.userModel({
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword ,
+            role
         });
 
         await newUser.save();
