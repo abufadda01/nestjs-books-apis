@@ -32,7 +32,7 @@ export class Book {
     category : Category
 
     @Prop({type : mongoose.Schema.Types.ObjectId , ref : "users"})
-    user : User
+    user : User // or  Types.ObjectId
 
 }
 

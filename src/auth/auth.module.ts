@@ -41,3 +41,13 @@ export class AuthModule {}
 // PassportModule: Passport.js integration for NestJS. It allows you to easily implement different authentication strategies.
 // JwtModule: Module for JSON Web Token (JWT) integration. It helps in creating and verifying JWT tokens.
 // ConfigService: Service provided by @nestjs/config to easily access environment variables and application configuration
+
+
+
+
+
+
+// first step register our PassportModule , JwtModule in our module , second step we define new instance (private jwtService: JwtService) in our serivce to create our token and our payload object
+// third step we define our jwtStrategy to extract the Bearer token from the auth header and verify it by the validate() function to add the user key in our req object
+// we add our JwtStrategy in the providers[] , exports[] array in our module class  , and add the PassportModule in our exports[] array
+// then we can the built in AuthGuard() , @UseGuards(AuthGuard()) in any of our other modules by import the AuthModule class in other module imports[] array that we want to use this authentication logic inside it , then we can use the AuthGuard() as a guard to protect our route methods and not access it until the user is logged in and send the bearer token in the auth header
