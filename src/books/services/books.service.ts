@@ -19,7 +19,7 @@ export class BooksService {
     async findAllBooks(query : ExpressQuery) : Promise <Book[]>{
         
         const limit = 10
-        const page = Number(query.page) || 1
+        const page = Number(query.page) 
         const skip = (page - 1) * limit
 
         // get the qurey object as parameter from the controller then check if i have keyword key inside it make the filter obj contains title key from the key_from_db and regex operator else we dont have it make it empty
